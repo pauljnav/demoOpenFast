@@ -1,0 +1,16 @@
+# Terraform Files to Ignore
+
+# Local state files
+*.tfstate
+*.tfstate.*
+# Secret variable files (contains sensitive values)
+*.tfvars
+*.tfvars.json
+# Terraform plan output files (may contain sensitive output)
+*.tfplan
+# Terraform-managed local settings
+.terraform/
+# Crash log files
+crash.log
+# Multi-purpose secret storage (common practice to ignore)
+.secrets
