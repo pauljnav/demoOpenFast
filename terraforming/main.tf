@@ -1,5 +1,5 @@
 # Variables
-variable "resource_group_name" { default = "rg-D2s2v8r-openfast" }
+variable "resource_group_name" { default = "rg-openfast" }
 variable "location" { default = "westeurope" }
 variable "vm_name" { default = "openfast-vm" }
 # Ensure your SSH public key is available
@@ -80,16 +80,32 @@ resource "azurerm_linux_virtual_machine" "example" {
   name                = var.vm_name
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
-  size                = "Standard_D2s_v3" # 2 vCPUs, 4 GB RAM - much smaller and cost-effective
+  size                = "Standard_F4s_v2"
   admin_username      = "azurepauljn"
   network_interface_ids = [
     azurerm_network_interface.example.id,
   ]
+/*
 #  Other good small VM size options you could consider:
 # Standard_B1s - 1 vCPU, 1 GB RAM (smallest/cheapest)
 # Standard_B1ms - 1 vCPU, 2 GB RAM
 # Standard_B2s - 2 vCPUs, 4 GB RAM
-# Standard_D2s_v3 - 2 vCPUs, 8 GB RAM (current choice)
+# Standard_D2s_v3 - 2 vCPUs, 8 GB RAM 
+
+# Compute optimized VM sizes
+Size Name	vCPUs (Qty.)	Memory (GB) 
+Standard_F2s_v2	2	4
+Standard_F4s_v2	4	8 (current choice)
+Standard_F8s_v2	8	16
+Standard_F16s_v2	16	32
+Standard_F1as_v7	1	4 RequestDisallowedByPolicy
+Standard_F2as_v7	2	8
+Standard_F4as_v7	4	16
+Standard_F8as_v7	8	32 
+Standard_FX2ms_v2	2	42
+Standard_FX4ms_v2	4	84
+Standard_FX8ms_v2	8	168
+*/
 
   # Installation script for Conda/OpenFAST
   custom_data = filebase64("${path.module}/install_conda_openfast.sh")
